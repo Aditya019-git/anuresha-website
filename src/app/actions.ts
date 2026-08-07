@@ -869,6 +869,8 @@ export async function getBills(projectId: string) {
 
 // PORTFOLIO ACTIONS
 export async function getPortfolioItems() {
+  const localData = getLocalPortfolio();
+
   try {
     const { data, error } = await supabase
       .from("portfolio")
@@ -876,14 +878,29 @@ export async function getPortfolioItems() {
       .order("created_at", { ascending: false });
 
     if (!error && data && data.length > 0) {
-      return { success: true, data };
+      // Merge local items (Synechron, Syntel) at the top, avoiding duplicate IDs/titles
+      const mergedMap = new Map();
+      
+      // Add local items first
+      localData.forEach((item: any) => {
+        if (item && item.title) {
+          mergedMap.set(item.title.trim().toLowerCase(), item);
+        }
+      });
+
+      // Add Supabase items
+      data.forEach((item: any) => {
+        if (item && item.title && !mergedMap.has(item.title.trim().toLowerCase())) {
+          mergedMap.set(item.title.trim().toLowerCase(), item);
+        }
+      });
+
+      return { success: true, data: Array.from(mergedMap.values()) };
     }
   } catch (error) {
     console.error("Fetch Portfolio Supabase Error:", error);
   }
 
-  // Fallback to local data
-  const localData = getLocalPortfolio();
   return { success: true, data: localData };
 }
 
