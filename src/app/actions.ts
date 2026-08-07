@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
+import os from "os";
 
 const LOCAL_PORTFOLIO_FILE = path.join(process.cwd(), "public", "portfolio_data.json");
 
@@ -364,16 +365,37 @@ export async function verifyOtpAndSetPassword(email: string, otp: string, newPas
   }
 }
 
-const ADMIN_OTP_FILE = path.join(process.cwd(), "public", "admin_otp.json");
+function getAdminOtpFilePath() {
+  try {
+    const tmpDir = os.tmpdir();
+    return path.join(tmpDir, "admin_otp.json");
+  } catch {
+    return path.join(process.cwd(), "public", "admin_otp.json");
+  }
+}
+
+// Global in-memory fallback for serverless execution
+declare global {
+  var __admin_otp_store: { otp: string; expiresAt: string } | undefined;
+}
 
 export async function sendAdminOtp() {
   try {
     const otp = generateOTP();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-    const dir = path.dirname(ADMIN_OTP_FILE);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(ADMIN_OTP_FILE, JSON.stringify({ otp, expiresAt }), "utf-8");
+    // Store in global memory
+    globalThis.__admin_otp_store = { otp, expiresAt };
+
+    // Also store in writable tmp directory
+    try {
+      const otpFile = getAdminOtpFilePath();
+      const dir = path.dirname(otpFile);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(otpFile, JSON.stringify({ otp, expiresAt }), "utf-8");
+    } catch (fsErr) {
+      console.warn("FS OTP write warning (using memory store):", fsErr);
+    }
 
     const email = "info.anuresha@gmail.com";
     const transporter = nodemailer.createTransport({
@@ -437,9 +459,9 @@ export async function sendAdminOtp() {
     }
 
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Send Admin OTP Error:", error);
-    return { success: false, error: "Failed to send OTP" };
+    return { success: false, error: error?.message || "Failed to send OTP to Admin Email." };
   }
 }
 
@@ -447,26 +469,45 @@ export async function verifyAdminOtp(prevState: any, formData: FormData) {
   const otp = formData.get("otp") as string;
 
   try {
-    if (!fs.existsSync(ADMIN_OTP_FILE)) {
-      return { error: "No OTP requested." };
+    let savedOtp = "";
+    let expiresAt = "";
+
+    // 1. Try global memory first
+    if (globalThis.__admin_otp_store) {
+      savedOtp = globalThis.__admin_otp_store.otp;
+      expiresAt = globalThis.__admin_otp_store.expiresAt;
+    } else {
+      // 2. Try tmp directory file
+      const otpFile = getAdminOtpFilePath();
+      if (fs.existsSync(otpFile)) {
+        const data = JSON.parse(fs.readFileSync(otpFile, "utf-8"));
+        savedOtp = data.otp;
+        expiresAt = data.expiresAt;
+      }
     }
 
-    const { otp: savedOtp, expiresAt } = JSON.parse(fs.readFileSync(ADMIN_OTP_FILE, "utf-8"));
+    if (!savedOtp) {
+      return { error: "No OTP requested or session expired." };
+    }
 
-    if (savedOtp !== otp) {
+    if (savedOtp !== otp?.trim()) {
       return { error: "Invalid OTP code." };
     }
 
     if (new Date() > new Date(expiresAt)) {
-      return { error: "OTP has expired." };
+      return { error: "OTP has expired. Please request a new code." };
     }
 
-    // Success
+    // Success - set admin session cookie
     const cookieStore = await cookies();
     cookieStore.set("admin_session", "true", { httpOnly: true, secure: process.env.NODE_ENV === "production", path: "/" });
     
-    // Clear OTP file
-    fs.unlinkSync(ADMIN_OTP_FILE);
+    // Clear OTP
+    globalThis.__admin_otp_store = undefined;
+    try {
+      const otpFile = getAdminOtpFilePath();
+      if (fs.existsSync(otpFile)) fs.unlinkSync(otpFile);
+    } catch {}
 
     redirect("/admin");
   } catch (error) {
