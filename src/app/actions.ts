@@ -187,10 +187,10 @@ export async function getClientDashboardData() {
 
 export async function submitLead(formData: FormData) {
   try {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const phone = formData.get("phone") as string;
-    const city = formData.get("city") as string;
+    const name = (formData.get("name") as string) || "Anonymous Client";
+    const email = (formData.get("email") as string) || "";
+    const phone = (formData.get("phone") as string) || "";
+    const city = (formData.get("city") as string) || "Pune";
     const notify_whatsapp = formData.get("notify_whatsapp") === "on";
 
     const newLead = {
@@ -204,11 +204,7 @@ export async function submitLead(formData: FormData) {
       created_at: new Date().toISOString()
     };
 
-    // Save locally
-    const currentLeads = getLocalLeads();
-    saveLocalLeads([newLead, ...currentLeads]);
-
-    // Insert into Supabase
+    // 1. Insert into Supabase
     try {
       await supabase
         .from("leads")
@@ -223,13 +219,54 @@ export async function submitLead(formData: FormData) {
           created_at: newLead.created_at
         }]);
     } catch (e) {
-      console.warn("Supabase insert failed for lead, saved locally.");
+      console.warn("Supabase insert failed for lead, continuing fallback.");
+    }
+
+    // 2. Save locally if writable
+    try {
+      const currentLeads = getLocalLeads();
+      saveLocalLeads([newLead, ...currentLeads]);
+    } catch (e) {
+      console.warn("Local leads save warning (serverless mode):", e);
+    }
+
+    // 3. Send email notification to info.anuresha@gmail.com
+    try {
+      if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+          },
+        });
+        await transporter.sendMail({
+          from: `"Anuresha Interior" <${process.env.SMTP_USER}>`,
+          to: "info.anuresha@gmail.com",
+          subject: `📩 New Estimate Request: ${name} (${city})`,
+          html: `
+            <div style="font-family: sans-serif; padding: 20px; background: #fafaf9; border-radius: 12px; border: 1px solid #e7e5e4;">
+              <h2 style="color: #1c1917;">New Estimate Request Received!</h2>
+              <p>A client has requested a transformation estimate from your website homepage.</p>
+              <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <tr><td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Name:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${name}</td></tr>
+                <tr><td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Phone:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">+91 ${phone}</td></tr>
+                <tr><td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">Email:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${email}</td></tr>
+                <tr><td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #eee;">City:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${city}</td></tr>
+                <tr><td style="padding: 8px; font-weight: bold;">WhatsApp Opt-In:</td><td style="padding: 8px;">${notify_whatsapp ? "Yes" : "No"}</td></tr>
+              </table>
+            </div>
+          `
+        });
+      }
+    } catch (e) {
+      console.warn("Admin email notification warning:", e);
     }
 
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Server Action Error:", error);
-    return { success: false, error: "Internal Server Error" };
+    return { success: false, error: error?.message || "Internal Server Error" };
   }
 }
 
