@@ -193,8 +193,10 @@ export async function submitLead(formData: FormData) {
     const city = (formData.get("city") as string) || "Pune";
     const notify_whatsapp = formData.get("notify_whatsapp") === "on";
 
+    const leadId = crypto.randomUUID();
+
     const newLead = {
-      id: "lead-" + Date.now(),
+      id: leadId,
       name,
       email,
       phone,
@@ -206,10 +208,10 @@ export async function submitLead(formData: FormData) {
 
     // 1. Insert into Supabase
     try {
-      await supabase
+      const { error } = await supabase
         .from("leads")
         .insert([{
-          id: newLead.id,
+          id: leadId,
           name,
           email,
           phone,
@@ -218,8 +220,12 @@ export async function submitLead(formData: FormData) {
           status: "New",
           created_at: newLead.created_at
         }]);
+
+      if (error) {
+        console.error("Supabase Lead Insert Error:", error);
+      }
     } catch (e) {
-      console.warn("Supabase insert failed for lead, continuing fallback.");
+      console.warn("Supabase insert failed for lead, continuing fallback:", e);
     }
 
     // 2. Save locally if writable
