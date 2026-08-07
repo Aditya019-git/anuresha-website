@@ -584,21 +584,37 @@ export async function createPendingProject(data: {
 }
 
 export async function getLeads() {
+  const localData = getLocalLeads();
+
   try {
     const { data, error } = await supabase
       .from("leads")
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (!error && data && data.length > 0) {
-      return { success: true, data };
+    if (!error && data) {
+      const leadMap = new Map();
+
+      // Add local leads first
+      localData.forEach(item => {
+        if (item && item.id) leadMap.set(item.id, item);
+      });
+
+      // Add Supabase leads
+      data.forEach(item => {
+        if (item && item.id) leadMap.set(item.id, item);
+      });
+
+      const allLeads = Array.from(leadMap.values()).sort((a: any, b: any) => 
+        new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
+      );
+
+      return { success: true, data: allLeads };
     }
   } catch (error) {
     console.error("Fetch Leads Supabase Error:", error);
   }
 
-  // Fallback to local data
-  const localData = getLocalLeads();
   return { success: true, data: localData };
 }
 
@@ -1075,10 +1091,14 @@ export async function updatePortfolioItem(formData: FormData) {
 
 export async function deletePortfolioItem(id: string) {
   try {
-    // Delete from local file
-    const currentLocal = getLocalPortfolio();
-    const filtered = currentLocal.filter(item => item.id !== id);
-    saveLocalPortfolio(filtered);
+    // Delete from local file safely
+    try {
+      const currentLocal = getLocalPortfolio();
+      const filtered = currentLocal.filter(item => item.id !== id);
+      saveLocalPortfolio(filtered);
+    } catch (e) {
+      console.warn("Local delete portfolio warning (serverless mode):", e);
+    }
 
     // Try Supabase delete
     try {
