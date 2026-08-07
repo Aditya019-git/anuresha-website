@@ -1,6 +1,6 @@
 "use server";
 
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAdmin } from "@/lib/supabase";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import nodemailer from "nodemailer";
@@ -208,7 +208,7 @@ export async function submitLead(formData: FormData) {
 
     // 1. Insert into Supabase
     try {
-      const { error } = await supabase
+      const { error } = await supabaseAdmin
         .from("leads")
         .insert([{
           id: leadId,
@@ -593,7 +593,7 @@ export async function getLeads() {
   const localData = getLocalLeads();
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("leads")
       .select("*")
       .order("created_at", { ascending: false });
@@ -632,7 +632,7 @@ export async function updateLeadStatus(id: string, status: string) {
     saveLocalLeads(updatedLeads);
 
     try {
-      await supabase
+      await supabaseAdmin
         .from("leads")
         .update({ status })
         .eq("id", id);
@@ -906,7 +906,7 @@ export async function getPortfolioItems() {
   const localData = getLocalPortfolio();
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("portfolio")
       .select("*")
       .order("created_at", { ascending: false });
@@ -1108,7 +1108,7 @@ export async function deletePortfolioItem(id: string) {
 
     // Try Supabase delete
     try {
-      await supabase.from("portfolio").delete().eq("id", id);
+      await supabaseAdmin.from("portfolio").delete().eq("id", id);
     } catch (e) {
       console.warn("Supabase delete failed, deleted from local store.");
     }
