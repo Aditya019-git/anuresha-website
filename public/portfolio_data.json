@@ -1,0 +1,38 @@
+[
+  {
+    "id": "port-syntel-1786003435937",
+    "title": "Syntel — Commercial Aluminium Office Partition Work",
+    "category": "Commercial",
+    "cover_image": "/images/projects/syntel/cover.png",
+    "pre_execution_images": [
+      "/images/projects/syntel/installation_3.png"
+    ],
+    "post_execution_images": [
+      "/images/projects/syntel/partition_2.png",
+      "/images/projects/syntel/cabin_4.png"
+    ],
+    "client_review": "Turnkey fabrication and installation of powder-coated aluminum office partitions with integrated glass panels, swing doors, acoustic lower panelling, and executive cabin enclosures for Syntel.",
+    "client_rating": 5,
+    "created_at": "2026-08-06T08:03:55.937Z"
+  },
+  {
+    "id": "port-synechron-1786002822788",
+    "title": "Synechron — Corporate Semi-Glazing & Partition Work",
+    "category": "Commercial",
+    "cover_image": "/images/projects/synechron/cover.png",
+    "pre_execution_images": [
+      "/images/projects/synechron/exec_1.png",
+      "/images/projects/synechron/exec_2.png"
+    ],
+    "post_execution_images": [
+      "/images/projects/synechron/glazing_1.png",
+      "/images/projects/synechron/glazing_2.png",
+      "/images/projects/synechron/glazing_3.png",
+      "/images/projects/synechron/lounge_2.png",
+      "/images/projects/synechron/corridor_3.png"
+    ],
+    "client_review": "Turnkey interior installation for Synechron Technologies featuring semi-glazing aluminum glass partitions, wall plastering, acoustic sealing, premium wooden floor polishing, and modern executive breakout lounge integration.",
+    "client_rating": 5,
+    "created_at": "2026-08-06T07:53:42.788Z"
+  }
+]
