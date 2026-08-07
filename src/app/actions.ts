@@ -402,37 +402,27 @@ export async function verifyOtpAndSetPassword(email: string, otp: string, newPas
   }
 }
 
-function getAdminOtpFilePath() {
-  try {
-    const tmpDir = os.tmpdir();
-    return path.join(tmpDir, "admin_otp.json");
-  } catch {
-    return path.join(process.cwd(), "public", "admin_otp.json");
-  }
-}
+import crypto from "crypto";
 
-// Global in-memory fallback for serverless execution
-declare global {
-  var __admin_otp_store: { otp: string; expiresAt: string } | undefined;
-}
+const OTP_SECRET = process.env.SMTP_PASS || "anuresha-admin-otp-secret-key";
 
 export async function sendAdminOtp() {
   try {
     const otp = generateOTP();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-    // Store in global memory
-    globalThis.__admin_otp_store = { otp, expiresAt };
+    // Compute cryptographic HMAC signature of OTP + expiration
+    const hmac = crypto.createHmac("sha256", OTP_SECRET).update(`${otp}:${expiresAt}`).digest("hex");
+    const challengeData = JSON.stringify({ hash: hmac, expiresAt });
 
-    // Also store in writable tmp directory
-    try {
-      const otpFile = getAdminOtpFilePath();
-      const dir = path.dirname(otpFile);
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(otpFile, JSON.stringify({ otp, expiresAt }), "utf-8");
-    } catch (fsErr) {
-      console.warn("FS OTP write warning (using memory store):", fsErr);
-    }
+    // Store challenge in secure HTTP-only cookie
+    const cookieStore = await cookies();
+    cookieStore.set("admin_otp_challenge", challengeData, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 600 // 10 minutes
+    });
 
     const email = "info.anuresha@gmail.com";
     const transporter = nodemailer.createTransport({
@@ -503,57 +493,42 @@ export async function sendAdminOtp() {
 }
 
 export async function verifyAdminOtp(prevState: any, formData: FormData) {
-  const otp = formData.get("otp") as string;
+  const userOtp = (formData.get("otp") as string)?.trim();
 
   try {
-    let savedOtp = "";
-    let expiresAt = "";
+    const cookieStore = await cookies();
+    const challengeCookie = cookieStore.get("admin_otp_challenge")?.value;
 
-    // 1. Try global memory first
-    if (globalThis.__admin_otp_store) {
-      savedOtp = globalThis.__admin_otp_store.otp;
-      expiresAt = globalThis.__admin_otp_store.expiresAt;
-    } else {
-      // 2. Try tmp directory file
-      const otpFile = getAdminOtpFilePath();
-      if (fs.existsSync(otpFile)) {
-        const data = JSON.parse(fs.readFileSync(otpFile, "utf-8"));
-        savedOtp = data.otp;
-        expiresAt = data.expiresAt;
-      }
+    if (!challengeCookie) {
+      return { error: "No OTP requested or session expired. Please request a new code." };
     }
 
-    if (!savedOtp) {
-      return { error: "No OTP requested or session expired." };
-    }
-
-    if (savedOtp !== otp?.trim()) {
-      return { error: "Invalid OTP code." };
-    }
+    const { hash: savedHash, expiresAt } = JSON.parse(challengeCookie);
 
     if (new Date() > new Date(expiresAt)) {
       return { error: "OTP has expired. Please request a new code." };
     }
 
+    // Compute expected HMAC for user-entered OTP
+    const expectedHash = crypto.createHmac("sha256", OTP_SECRET).update(`${userOtp}:${expiresAt}`).digest("hex");
+
+    if (expectedHash !== savedHash) {
+      return { error: "Invalid OTP code. Please check and try again." };
+    }
+
     // Success - set admin session cookie
-    const cookieStore = await cookies();
     cookieStore.set("admin_session", "true", { httpOnly: true, secure: process.env.NODE_ENV === "production", path: "/" });
     
-    // Clear OTP
-    globalThis.__admin_otp_store = undefined;
-    try {
-      const otpFile = getAdminOtpFilePath();
-      if (fs.existsSync(otpFile)) fs.unlinkSync(otpFile);
-    } catch {}
+    // Clear challenge cookie
+    cookieStore.delete("admin_otp_challenge");
 
     redirect("/admin");
   } catch (error) {
     console.error("Verify Admin OTP Error:", error);
-    // If it's a redirect error, re-throw it so Next.js handles it properly
     if (error && typeof error === 'object' && 'digest' in error && (error as any).digest.startsWith('NEXT_REDIRECT')) {
       throw error;
     }
-    return { error: "Verification failed." };
+    return { error: "Verification failed. Please request a new OTP." };
   }
 }
 
