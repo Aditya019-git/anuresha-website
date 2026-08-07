@@ -997,8 +997,10 @@ export async function addPortfolioItem(formData: FormData) {
       if (url) post_execution_images.push(url);
     }
 
+    const itemId = crypto.randomUUID();
+
     const newItem = {
-      id: "port-" + Date.now(),
+      id: itemId,
       title,
       category,
       cover_image,
@@ -1010,12 +1012,16 @@ export async function addPortfolioItem(formData: FormData) {
     };
 
     // Save to local storage fallback
-    const currentLocal = getLocalPortfolio();
-    saveLocalPortfolio([newItem, ...currentLocal]);
+    try {
+      const currentLocal = getLocalPortfolio();
+      saveLocalPortfolio([newItem, ...currentLocal]);
+    } catch (e) {
+      console.warn("Local portfolio save warning:", e);
+    }
 
     // Also attempt Supabase insert if available
     try {
-      await supabase
+      await supabaseAdmin
         .from("portfolio")
         .insert([{ 
           id: newItem.id,
@@ -1097,7 +1103,7 @@ export async function updatePortfolioItem(formData: FormData) {
 
 export async function deletePortfolioItem(id: string) {
   try {
-    // Delete from local file safely
+    // 1. Delete from local file safely
     try {
       const currentLocal = getLocalPortfolio();
       const filtered = currentLocal.filter(item => item.id !== id);
@@ -1106,11 +1112,14 @@ export async function deletePortfolioItem(id: string) {
       console.warn("Local delete portfolio warning (serverless mode):", e);
     }
 
-    // Try Supabase delete
-    try {
-      await supabaseAdmin.from("portfolio").delete().eq("id", id);
-    } catch (e) {
-      console.warn("Supabase delete failed, deleted from local store.");
+    // 2. Try Supabase delete if id is a valid PostgreSQL UUID
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+    if (isUuid) {
+      try {
+        await supabaseAdmin.from("portfolio").delete().eq("id", id);
+      } catch (e) {
+        console.warn("Supabase delete failed:", e);
+      }
     }
 
     return { success: true };
