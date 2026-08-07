@@ -141,10 +141,10 @@ export default function Home() {
               An Innovator in Building and Property Maintenance. Covering all Pune, Mumbai & Nearby areas for Commercial, Industrial and Residential projects.
             </p>
             <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              <div className="flex -space-x-4">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white" />
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white" />
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white" />
+              <div className="flex -space-x-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center border-2 border-white shadow-sm text-sm">A</div>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-stone-900 text-white font-bold flex items-center justify-center border-2 border-white shadow-sm text-sm">S</div>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center border-2 border-white shadow-sm text-sm">M</div>
               </div>
               <div className="text-sm">
                 <div className="font-bold text-stone-900">Trusted by 500+ Clients</div>
