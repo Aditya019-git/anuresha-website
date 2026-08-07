@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getLeads, updateLeadStatus } from "@/app/actions";
+import { getLeads, updateLeadStatus, deleteLead } from "@/app/actions";
 
 type Lead = {
   id: string;
@@ -51,6 +51,22 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Error updating status:", error);
       alert("Failed to update status");
+    }
+  }
+
+  async function deleteLeadHandler(id: string) {
+    if (!confirm("Are you sure you want to delete this lead?")) return;
+
+    try {
+      const result = await deleteLead(id);
+      if (result.success) {
+        setLeads(leads.filter(lead => lead.id !== id));
+      } else {
+        alert("Failed to delete lead");
+      }
+    } catch (error) {
+      console.error("Error deleting lead:", error);
+      alert("Failed to delete lead");
     }
   }
 
@@ -182,6 +198,13 @@ export default function AdminDashboard() {
                             WhatsApp
                           </a>
                         )}
+                        <button
+                          onClick={() => deleteLeadHandler(lead.id)}
+                          className="bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-lg font-medium text-sm transition-colors flex items-center gap-1.5 border border-red-200"
+                          title="Delete Lead"
+                        >
+                          🗑️ Delete
+                        </button>
                       </div>
                     </td>
                   </tr>

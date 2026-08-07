@@ -647,6 +647,34 @@ export async function updateLeadStatus(id: string, status: string) {
   }
 }
 
+export async function deleteLead(id: string) {
+  try {
+    // 1. Delete from local data if present
+    try {
+      const localLeads = getLocalLeads();
+      const filteredLeads = localLeads.filter(lead => lead.id !== id);
+      saveLocalLeads(filteredLeads);
+    } catch (e) {
+      console.warn("Local lead delete warning (serverless mode):", e);
+    }
+
+    // 2. Delete from Supabase if valid UUID
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+    if (isUuid) {
+      try {
+        await supabaseAdmin.from("leads").delete().eq("id", id);
+      } catch (e) {
+        console.warn("Supabase lead delete error:", e);
+      }
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Delete Lead Error:", error);
+    return { success: false, error: "Failed to delete lead" };
+  }
+}
+
 export async function getProjects() {
   try {
     // Join projects with clients to get client name and phone
