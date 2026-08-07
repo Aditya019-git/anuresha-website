@@ -113,7 +113,7 @@ export default function Home() {
       <Header />
 
       {/* HERO SECTION */}
-      <section className="relative pt-40 pb-32 lg:pt-48 lg:pb-40 min-h-[90vh] flex items-center">
+      <section className="relative pt-28 pb-16 lg:pt-48 lg:pb-40 min-h-[90vh] flex items-center">
         {/* Background Image Container */}
         <div className="absolute inset-0 z-0">
           <Image 
@@ -126,25 +126,25 @@ export default function Home() {
           />
         </div>
 
-        <div className="container mx-auto px-6 z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Text */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 text-stone-900 bg-white/40 p-8 rounded-3xl backdrop-blur-sm border border-white/50"
+            className="lg:col-span-7 text-stone-900 bg-white/70 p-6 sm:p-8 rounded-3xl backdrop-blur-md border border-white/60 shadow-xl"
           >
-            <h1 className="font-outfit text-5xl md:text-7xl font-semibold leading-tight mb-6">
+            <h1 className="font-outfit text-3xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 sm:mb-6">
               Transforming Spaces. <br /> Building Trust.
             </h1>
-            <p className="text-lg md:text-xl text-stone-800 mb-8 max-w-xl leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-stone-800 mb-6 sm:mb-8 max-w-xl leading-relaxed">
               An Innovator in Building and Property Maintenance. Covering all Pune, Mumbai & Nearby areas for Commercial, Industrial and Residential projects.
             </p>
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
               <div className="flex -space-x-4">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-12 h-12 rounded-full border-2 border-white" />
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-12 h-12 rounded-full border-2 border-white" />
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-12 h-12 rounded-full border-2 border-white" />
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white" />
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white" />
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Client" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white" />
               </div>
               <div className="text-sm">
                 <div className="font-bold text-stone-900">Trusted by 500+ Clients</div>
@@ -152,7 +152,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4">
               <Link href="/portfolio" className="px-8 py-4 bg-amber-600 text-white rounded-xl font-bold hover:bg-amber-700 shadow-xl shadow-amber-600/30 transition-all hover:-translate-y-1 inline-block text-center">
                 View Our Work
               </Link>
