@@ -74,7 +74,7 @@ export default function Footer() {
         
         <div className="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-stone-500 text-sm">
-            &copy; {new Date().getFullYear()} Anuresha Interior Pvt Ltd. All rights reserved.
+            &copy; 2023 Anuresha Interior Pvt Ltd. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <a href="#" className="text-stone-500 hover:text-stone-300 transition-colors">Privacy Policy</a>

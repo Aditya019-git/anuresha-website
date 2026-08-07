@@ -18,7 +18,8 @@ export default function Header() {
               alt="Anuresha Interiors Logo" 
               width={300} 
               height={90} 
-              className="h-16 md:h-28 w-auto object-contain drop-shadow-md cursor-pointer hover:opacity-90 transition-opacity" 
+              unoptimized={true}
+              className="h-14 sm:h-16 md:h-28 w-auto min-w-[150px] sm:min-w-[180px] object-contain drop-shadow-md cursor-pointer hover:opacity-90 transition-opacity shrink-0" 
               priority 
             />
           </Link>
