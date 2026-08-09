@@ -8,8 +8,8 @@ export default function Footer() {
           
           {/* Brand */}
           <div>
-            <div className="bg-white p-4 rounded-xl inline-block mb-6">
-              <Image src="/images/logo.png" alt="Anuresha Logo" width={140} height={50} className="object-contain" />
+            <div className="bg-white/95 p-4 rounded-2xl inline-block mb-6 shadow-xl border border-white/20">
+              <Image src="/images/logo.png" alt="Anuresha Logo" width={220} height={70} className="h-14 sm:h-16 w-auto object-contain" />
             </div>
             <p className="text-stone-400 leading-relaxed mb-6">
               Transforming spaces and building trust across Pune and Mumbai. An innovator in Commercial, Industrial, and Residential property maintenance.

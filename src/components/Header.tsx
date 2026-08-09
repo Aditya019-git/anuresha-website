@@ -16,10 +16,10 @@ export default function Header() {
             <Image 
               src="/images/logo.png" 
               alt="Anuresha Interiors Logo" 
-              width={300} 
-              height={90} 
+              width={360} 
+              height={120} 
               unoptimized={true}
-              className="h-14 sm:h-16 md:h-28 w-auto min-w-[150px] sm:min-w-[180px] object-contain drop-shadow-md cursor-pointer hover:opacity-90 transition-opacity shrink-0" 
+              className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto min-w-[200px] sm:min-w-[240px] object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)] cursor-pointer hover:scale-105 transition-all shrink-0" 
               priority 
             />
           </Link>
