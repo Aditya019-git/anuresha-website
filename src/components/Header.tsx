@@ -12,16 +12,31 @@ export default function Header() {
     <header className="absolute top-0 w-full z-50 py-4 md:py-6">
       <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
         <div className="flex items-center">
-          <Link href="/">
-            <Image 
-              src="/images/logo.png" 
-              alt="Anuresha Interiors Logo" 
-              width={360} 
-              height={120} 
-              unoptimized={true}
-              className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto min-w-[200px] sm:min-w-[240px] object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)] cursor-pointer hover:scale-105 transition-all shrink-0" 
-              priority 
-            />
+          <Link href="/" className="flex items-center gap-3 md:gap-4 group cursor-pointer">
+            {/* Borderless Transparent Ganesha Emblem Icon */}
+            <div className="relative h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 shrink-0 transition-transform duration-300 group-hover:scale-105">
+              <Image 
+                src="/images/logo_icon_transparent.png" 
+                alt="Anuresha Interior Icon" 
+                fill
+                unoptimized={true}
+                className="object-contain drop-shadow-[0_4px_16px_rgba(249,115,22,0.5)]" 
+                priority 
+              />
+            </div>
+            
+            {/* Brand Name Typography - Red ANURESHA, Orange INTERIOR, Ultra-Bright White PRIVATE LIMITED */}
+            <div className="flex flex-col justify-center select-none">
+              <span className="font-outfit font-black text-2xl sm:text-3xl md:text-4xl tracking-tight uppercase leading-none text-red-600 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+                ANURESHA
+              </span>
+              <span className="font-outfit font-extrabold text-xs sm:text-base md:text-lg tracking-wider uppercase leading-tight text-orange-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] mt-0.5">
+                INTERIOR
+              </span>
+              <span className="font-outfit font-black text-[9px] sm:text-xs md:text-sm tracking-[0.25em] uppercase leading-none text-white drop-shadow-[0_2px_8px_rgba(0,0,0,1)] mt-1">
+                PRIVATE LIMITED
+              </span>
+            </div>
           </Link>
         </div>
         

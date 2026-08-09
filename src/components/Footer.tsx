@@ -8,8 +8,15 @@ export default function Footer() {
           
           {/* Brand */}
           <div>
-            <div className="bg-white/95 p-4 rounded-2xl inline-block mb-6 shadow-xl border border-white/20">
-              <Image src="/images/logo.png" alt="Anuresha Logo" width={220} height={70} className="h-14 sm:h-16 w-auto object-contain" />
+            <div className="flex items-center gap-3 md:gap-4 mb-6 bg-stone-900/90 p-4 rounded-2xl border border-stone-800 shadow-xl w-fit">
+              <div className="relative h-14 w-14 shrink-0">
+                <Image src="/images/logo_icon_transparent.png" alt="Anuresha Logo Icon" fill unoptimized={true} className="object-contain drop-shadow-[0_4px_12px_rgba(249,115,22,0.4)]" />
+              </div>
+              <div className="flex flex-col select-none">
+                <span className="font-outfit font-black text-2xl tracking-tight uppercase leading-none text-red-600">ANURESHA</span>
+                <span className="font-outfit font-extrabold text-sm tracking-wider uppercase leading-tight text-orange-500 mt-0.5">INTERIOR</span>
+                <span className="font-outfit font-black text-[10px] tracking-[0.25em] text-white uppercase leading-none mt-1">PRIVATE LIMITED</span>
+              </div>
             </div>
             <p className="text-stone-400 leading-relaxed mb-6">
               Transforming spaces and building trust across Pune and Mumbai. An innovator in Commercial, Industrial, and Residential property maintenance.

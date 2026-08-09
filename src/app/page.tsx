@@ -113,7 +113,7 @@ export default function Home() {
       <Header />
 
       {/* HERO SECTION */}
-      <section className="relative pt-28 pb-16 lg:pt-48 lg:pb-40 min-h-[90vh] flex items-center">
+      <section className="relative pt-36 sm:pt-44 lg:pt-56 pb-16 lg:pb-40 min-h-[90vh] flex items-center">
         {/* Background Image Container */}
         <div className="absolute inset-0 z-0">
           <Image 
@@ -134,6 +134,10 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-7 text-stone-900 bg-white/70 p-6 sm:p-8 rounded-3xl backdrop-blur-md border border-white/60 shadow-xl"
           >
+            <div className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-orange-500 text-white px-4 py-2 rounded-full mb-4 border border-amber-300/40 shadow-lg shadow-amber-600/30">
+              <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shrink-0"></span>
+              <span className="font-outfit text-xs sm:text-sm font-black tracking-wider uppercase text-white drop-shadow-sm">Anuresha Interior Private Limited</span>
+            </div>
             <h1 className="font-outfit text-3xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 sm:mb-6">
               Transforming Spaces. <br /> Building Trust.
             </h1>
@@ -427,9 +431,9 @@ export default function Home() {
                 </div>
                 <div className="p-8">
                   <h3 className="font-outfit text-2xl font-bold text-stone-900 mb-1">Mr. Ranjit Pande</h3>
-                  <p className="text-amber-600 font-medium mb-4">Founder & Director</p>
+                  <p className="text-amber-600 font-semibold mb-4">Founder & Director</p>
                   <p className="text-stone-600 leading-relaxed mb-6">
-                    One of the founding members with over 8+ years of expertise in full-scale interior and industrial maintenance. He heads Marketing, Sales, Execution, and Customer Relations.
+                    Founder and Director of Anuresha Interiors with over 8+ years of expertise in full-scale interior and industrial maintenance. He heads Marketing, Sales, Execution, and Customer Relations.
                   </p>
                   <div className="bg-stone-50 p-4 rounded-xl border border-stone-100">
                     <span className="text-xs font-bold uppercase tracking-wider text-stone-400 block mb-2">Trusted By Corporate Clients</span>
@@ -445,9 +449,9 @@ export default function Home() {
                 </div>
                 <div className="p-8">
                   <h3 className="font-outfit text-2xl font-bold text-stone-900 mb-1">Mr. Nilesh Bhusal</h3>
-                  <p className="text-amber-600 font-medium mb-4">Founder & Director</p>
+                  <p className="text-amber-600 font-semibold mb-4">Director</p>
                   <p className="text-stone-600 leading-relaxed mb-6">
-                    Co-founder and Director of Anuresha Interiors. He heads Project Operations, Resource Procurement, and technical planning, ensuring that all projects run seamlessly and meet engineering standards.
+                    Director of Anuresha Interiors. He heads Project Operations, Resource Procurement, and technical planning, ensuring that all projects run seamlessly and meet engineering standards.
                   </p>
                   <div className="bg-stone-50 p-4 rounded-xl border border-stone-100">
                     <span className="text-xs font-bold uppercase tracking-wider text-stone-400 block mb-2">Core Philosophy</span>
