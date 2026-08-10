@@ -207,6 +207,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} antialiased scroll-smooth`}>
       <head>
+        <meta name="google-site-verification" content="QHVq_VcVkZ8aemNNSgq_sW8Q-jjnxJ1rNVr1xtcnvss" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
