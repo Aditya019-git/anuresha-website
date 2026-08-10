@@ -545,7 +545,47 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
+      {/* FAQ SECTION FOR GOOGLE RICH SNIPPET SEO */}
+      <section className="py-20 bg-stone-900 text-white relative border-t border-stone-800">
+        <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
+          <div className="text-center mb-12">
+            <span className="text-amber-500 font-bold uppercase tracking-widest text-xs sm:text-sm">Got Questions?</span>
+            <h2 className="font-outfit text-3xl sm:text-4xl md:text-5xl font-bold mt-2">Frequently Asked Questions</h2>
+            <p className="text-stone-400 mt-3 text-base sm:text-lg">Everything you need to know about our interior design, turnkey contracting, and maintenance services.</p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-stone-800/80 rounded-2xl p-6 border border-stone-700/60 shadow-lg">
+              <h3 className="font-outfit text-lg sm:text-xl font-bold text-amber-400 mb-2">
+                Q: What interior design & civil contractor services does Anuresha Interior Private Limited provide?
+              </h3>
+              <p className="text-stone-300 leading-relaxed text-sm sm:text-base">
+                Anuresha Interior Private Limited offers end-to-end turn-key solutions including modular kitchen & wardrobe installation, gypsum false ceilings, commercial office glass partitions, ACP cladding, industrial epoxy flooring, electrical & plumbing works, solar power setups, and property maintenance across Pune, PCMC, Bhosari, Hinjawadi, and Mumbai.
+              </p>
+            </div>
+
+            <div className="bg-stone-800/80 rounded-2xl p-6 border border-stone-700/60 shadow-lg">
+              <h3 className="font-outfit text-lg sm:text-xl font-bold text-amber-400 mb-2">
+                Q: Which corporate clients have trusted Anuresha Interior Pvt Ltd?
+              </h3>
+              <p className="text-stone-300 leading-relaxed text-sm sm:text-base">
+                We have successfully executed major corporate interior and property maintenance projects for industry leaders such as TCS, Syntel, Synechron, Fujitsu, Nvidia, HCL, Suzlon, and Mphasis.
+              </p>
+            </div>
+
+            <div className="bg-stone-800/80 rounded-2xl p-6 border border-stone-700/60 shadow-lg">
+              <h3 className="font-outfit text-lg sm:text-xl font-bold text-amber-400 mb-2">
+                Q: How do I get a free quote for my residential or commercial interior project?
+              </h3>
+              <p className="text-stone-300 leading-relaxed text-sm sm:text-base">
+                You can easily submit an inquiry through our contact form above or call our directors directly at <strong className="text-white">+91 96040 55295</strong> or <strong className="text-white">+91 97675 92251</strong> for an immediate site visit and free estimate.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
 
       <Footer />

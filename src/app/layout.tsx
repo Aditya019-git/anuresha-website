@@ -79,72 +79,122 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  "name": "Anuresha Interior Private Limited",
-  "alternateName": ["Anuresha Interiors", "Anuresha Maintenance", "Anuresha"],
-  "url": "https://www.anuresha.com",
-  "logo": "https://www.anuresha.com/images/logo.png",
-  "image": "https://www.anuresha.com/images/about_bg.png",
-  "description": "Leading interior design, modular furniture, civil contracting, and property maintenance firm in Pune & Mumbai.",
-  "telephone": ["+91-9604055295", "+91-9767592251"],
-  "email": "info.anuresha@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Sr. No. 219/2B, Subhadra Heights, Fl. No. C-401, Dighi Rd, Shivnagri Colony, Bhosari",
-    "addressLocality": "Pimpri-Chinchwad, Pune",
-    "addressRegion": "Maharashtra",
-    "postalCode": "411039",
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 18.6235,
-    "longitude": 73.8436
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "@id": "https://www.anuresha.com/#business",
+    "name": "Anuresha Interior Private Limited",
+    "alternateName": ["Anuresha Interiors", "Anuresha Maintenance", "Anuresha Interior Pvt Ltd"],
+    "url": "https://www.anuresha.com",
+    "logo": "https://www.anuresha.com/images/logo_icon_transparent.png",
+    "image": "https://www.anuresha.com/images/about_bg.png",
+    "description": "Leading turn-key interior design, modular furniture, civil contracting, ACP, glass partitioning, and property maintenance firm serving Pune & Mumbai.",
+    "telephone": ["+91-9604055295", "+91-9767592251"],
+    "email": "info.anuresha@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Sr. No. 219/2B, Subhadra Heights, Fl. No. C-401, Dighi Rd, Shivnagri Colony, Bhosari",
+      "addressLocality": "Pimpri-Chinchwad, Pune",
+      "addressRegion": "Maharashtra",
+      "postalCode": "411039",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 18.6235,
+      "longitude": 73.8436
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    "priceRange": "₹₹-₹₹₹",
+    "areaServed": [
+      "Pune",
+      "Mumbai",
+      "Pimpri-Chinchwad",
+      "Bhosari",
+      "Hinjawadi",
+      "Baner",
+      "Wakad",
+      "Kothrud",
+      "Navi Mumbai",
+      "Maharashtra"
     ],
-    "opens": "09:00",
-    "closes": "20:00"
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Interior Design & Property Maintenance Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modular Furniture & Carpentry" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Painting & Wallpaper Services" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Glass & Filming Work" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Road Transport Services" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fabrication & ACP Works" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Epoxy Flooring Solutions" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gypsum & False Ceiling Work" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Electrical & Plumbing Works" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Solar Power System Installation" } }
+      ]
+    }
   },
-  "priceRange": "₹₹-₹₹₹",
-  "areaServed": [
-    "Pune",
-    "Mumbai",
-    "Pimpri-Chinchwad",
-    "Bhosari",
-    "Hinjawadi",
-    "Baner",
-    "Wakad",
-    "Kothrud",
-    "Navi Mumbai",
-    "Maharashtra"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Interior Design & Maintenance Services",
-    "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modular Furniture & Carpentry" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Painting & Polishing Services" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Glass & Filming Work" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Road Transport Services" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fabrication & ACP Works" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Epoxy Flooring Solutions" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gypsum & False Ceiling Work" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Electrical & Plumbing Works" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Solar Power System Installation" } }
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.anuresha.com/#organization",
+    "name": "Anuresha Interior Private Limited",
+    "url": "https://www.anuresha.com",
+    "logo": "https://www.anuresha.com/images/logo_icon_transparent.png",
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+91-9604055295",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi", "Marathi"]
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What services does Anuresha Interior Pvt Ltd offer in Pune and Mumbai?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Anuresha Interior Private Limited specializes in complete turnkey interior design, modular furniture, gypsum false ceilings, commercial office glass partitions, ACP fabrication, industrial epoxy flooring, painting, and property maintenance across Pune and Mumbai."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which corporate clients has Anuresha Interior worked with?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Anuresha Interior Private Limited has delivered high-grade commercial projects for corporate clients including TCS, Syntel, Synechron, Fujitsu, Nvidia, HCL, Suzlon, and Mphasis."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I request an estimate for interior design or civil work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can request a free estimate directly on our website at www.anuresha.com or call our team directly at +91 96040 55295 or +91 97675 92251."
+        }
+      }
     ]
   }
-};
+];
 
 export default function RootLayout({
   children,
