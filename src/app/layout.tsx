@@ -36,6 +36,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.anuresha.com",
   },
+  verification: {
+    google: "QHVq_VcVkZ8aemNNSgq_sW8Q-jjnxJ1rNVr1xtcnvss",
+  },
   icons: {
     icon: [
       { url: "/images/logo_icon_transparent.png", type: "image/png" },
