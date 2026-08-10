@@ -36,6 +36,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.anuresha.com",
   },
+  icons: {
+    icon: [
+      { url: "/images/logo_icon_transparent.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/images/logo_icon_transparent.png",
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: "Anuresha Interior Pvt Ltd | Transforming Spaces, Building Trust",
     description: "Pune & Mumbai's trusted partner for turn-key interior design, modular furniture, civil construction, and property maintenance.",
