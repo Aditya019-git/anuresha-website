@@ -586,6 +586,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TARGETED KEYWORD INDEX & LOCATIONS SECTION FOR GOOGLE RANKINGS */}
+      <section className="py-12 bg-stone-950 text-stone-400 border-t border-stone-800 text-xs leading-relaxed">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="mb-6">
+            <h3 className="font-outfit text-sm font-bold text-amber-500 uppercase tracking-widest mb-2">Targeted Service Index & Localized Solutions</h3>
+            <p className="text-stone-400">Anuresha Interior Private Limited is the premier turnkey interior design contractor and property maintenance company serving commercial, industrial, and residential clients across Maharashtra.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pt-4 border-t border-stone-800/60">
+            <div>
+              <h4 className="font-bold text-stone-200 mb-2">Turnkey Interior Design</h4>
+              <ul className="space-y-1 text-stone-400">
+                <li>• Turnkey Interior Contractor Pune</li>
+                <li>• Turnkey Interior Contractor PCMC</li>
+                <li>• Modular Furniture Manufacturer Baner</li>
+                <li>• Modular Kitchen & Wardrobe Wakad</li>
+                <li>• Corporate Office Decorator Kothrud</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-stone-200 mb-2">Commercial & Industrial Works</h4>
+              <ul className="space-y-1 text-stone-400">
+                <li>• Office Glass Partition Contractors Bhosari</li>
+                <li>• Glass & Aluminium Partition Hinjawadi</li>
+                <li>• Commercial ACP Cladding Work Mumbai</li>
+                <li>• ACP Exterior & Interior Cladding Navi Mumbai</li>
+                <li>• Industrial Epoxy Flooring Chakan & Bhosari MIDC</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-stone-200 mb-2">Property Maintenance & Civil</h4>
+              <ul className="space-y-1 text-stone-400">
+                <li>• Property Maintenance Contractor Pune</li>
+                <li>• Civil Construction & Gypsum Ceiling Pune</li>
+                <li>• Painting, Electrical & Plumbing Services</li>
+                <li>• Solar Power System Installation PCMC</li>
+                <li>• Road Transport & Material Logistics Maharashtra</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
 
       <Footer />
